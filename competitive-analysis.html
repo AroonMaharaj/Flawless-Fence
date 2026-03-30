@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitive Intelligence Report — Flawless Fence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f6f4f0;
+    --accent: #c45d3e;
+    --accent-light: #e8a48e;
+    --muted: #8a8580;
+    --divider: #d6d2cc;
+    --card: #fffefa;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  h1 { font-size: 3.2rem; letter-spacing: -0.02em; }
+  h2 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.01em; }
+  h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  h4 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+
+  p { margin-bottom: 1rem; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Divider */
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--divider);
+    margin: 3.5rem 0;
+  }
+
+  /* Cover */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 32px;
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  .cover-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .cover h1 {
+    font-size: 3.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-subtitle {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.35rem;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+  }
+
+  .cover-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .cover-rule {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 2rem auto;
+  }
+
+  /* Section */
+  .section {
+    padding: 4rem 0;
+    animation: fadeUp 0.6s ease-out;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.4rem;
+    line-height: 1.3;
+  }
+
+  .card-url {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Color swatches */
+  .swatches {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  .swatch-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'DM Sans', monospace;
+  }
+
+  /* Detail rows */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 2rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .detail-grid dt {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .detail-grid dd {
+    margin-bottom: 0.5rem;
+  }
+
+  .strengths {
+    background: #f0ece6;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .strengths-title {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .differentiator {
+    margin-top: 0.75rem;
+    padding: 0.6rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(196,93,62,0.04);
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  /* Comparison table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: 12px;
+    border: 1px solid var(--divider);
+    background: var(--card);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    min-width: 700px;
+  }
+
+  thead th {
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { border-radius: 11px 0 0 0; }
+  thead th:last-child { border-radius: 0 11px 0 0; }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover { background: rgba(196,93,62,0.03); }
+
+  tbody td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .rating { color: var(--accent); font-weight: 600; }
+  .rating-low { color: var(--muted); }
+
+  /* Numbered list with accent */
+  .pattern-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: pattern;
+  }
+
+  .pattern-list li {
+    counter-increment: pattern;
+    padding: 0.75rem 0 0.75rem 3rem;
+    position: relative;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .pattern-list li:last-child { border-bottom: none; }
+
+  .pattern-list li::before {
+    content: counter(pattern, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    color: var(--accent-light);
+    font-weight: 400;
+  }
+
+  /* Recommendation cards */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .rec-item {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .rec-item h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .rec-item p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 3rem 0 4rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .footer-rule {
+    width: 40px;
+    height: 1px;
+    background: var(--divider);
+    margin: 0 auto 1.5rem;
+  }
+
+  /* Animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Print */
+  @media print {
+    body::after { display: none; }
+
+    body {
+      font-size: 11pt;
+      background: #fff;
+      color: #000;
+    }
+
+    .container { max-width: 100%; padding: 0; }
+
+    .cover {
+      min-height: auto;
+      padding: 2cm 0;
+      page-break-after: always;
+    }
+
+    .cover h1 { font-size: 28pt; }
+
+    .section { padding: 1.5rem 0; }
+
+    .card {
+      box-shadow: none;
+      border: 1px solid #ccc;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .card:hover { box-shadow: none; }
+
+    hr { margin: 1.5rem 0; }
+
+    .table-wrap {
+      border: 1px solid #ccc;
+      box-shadow: none;
+    }
+
+    thead th { background: #333; }
+
+    .rec-grid { break-inside: avoid; }
+
+    .rec-item {
+      box-shadow: none;
+      break-inside: avoid;
+    }
+
+    a { color: var(--accent); }
+
+    h2 { page-break-after: avoid; }
+  }
+
+  @media (max-width: 640px) {
+    .cover h1 { font-size: 2.4rem; }
+    h2 { font-size: 1.6rem; }
+    .card { padding: 1.5rem; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .rec-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-label">Prepared for Flawless Fence</div>
+  <h1>Competitive Intelligence<br>Report</h1>
+  <div class="cover-rule"></div>
+  <div class="cover-subtitle">Flawless Fence &mdash; GTA Fencing Market</div>
+  <div class="cover-meta">
+    March 2026<br>
+    Prepared for Mike
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="section">
+  <div class="section-label">01 &mdash; Executive Summary</div>
+  <h2>Market Overview</h2>
+  <p>This report analyzes the competitive landscape of the western GTA fencing market, identifying patterns, strengths, and strategic opportunities for Flawless Fence.</p>
+  <ul>
+    <li><strong>10 competitors identified</strong> across the western GTA fencing market</li>
+    <li><strong>5 deep-analyzed</strong> for visual identity, content strategy, and conversion tactics</li>
+    <li><strong>GTA Fencing Company is the clear market leader</strong> with modern design, 10 service pages, and 10 location pages</li>
+    <li><strong>Most competitors use Wix templates</strong> with dated designs and limited content</li>
+    <li><strong>Key opportunity:</strong> Flawless Fence has 10+ years of experience and 60+ gallery photos but needs a modern design, expanded service pages, and stronger trust signals to compete effectively</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ============ COMPETITOR PROFILES ============ -->
+<div class="section">
+  <div class="section-label">02 &mdash; Competitor Profiles</div>
+  <h2>Deep Analysis</h2>
+
+  <!-- Competitor 1 -->
+  <div class="card" style="animation: fadeUp 0.6s ease-out 0.1s both;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">1. GTA Fencing Company</div>
+        <div class="card-url">gtafencingcompany.com</div>
+      </div>
+      <div class="score-badge">77 / 80</div>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#FCF5E9;"></div>
+      <span class="swatch-label">#FCF5E9</span>
+      <div class="swatch" style="background:#E94E1B;"></div>
+      <span class="swatch-label">#E94E1B</span>
+      <div class="swatch" style="background:#273043;"></div>
+      <span class="swatch-label">#273043</span>
+    </div>
+    <div class="detail-grid">
+      <dt>Font</dt>
+      <dd>Inter</dd>
+      <dt>Tech Stack</dt>
+      <dd>Next.js + Tailwind CSS</dd>
+      <dt>Experience</dt>
+      <dd>15+ years, 2,500+ projects</dd>
+      <dt>Rating</dt>
+      <dd>4.9 / 5</dd>
+      <dt>Service Pages</dt>
+      <dd>10 dedicated pages</dd>
+      <dt>Location Pages</dt>
+      <dd>10 dedicated pages</dd>
+    </div>
+    <p style="font-size:0.9rem;">Includes FAQ section, embedded YouTube video, and comprehensive content architecture. Best-in-class trust signals with project stats prominently featured.</p>
+    <div class="strengths">
+      <div class="strengths-title">Strengths</div>
+      Best design in the market. Best SEO architecture with dedicated service and location pages. Strongest trust signals. Modern tech stack enables fast performance and rich interactions.
+    </div>
+    <div class="differentiator">Key Differentiator: Most comprehensive site structure in the market</div>
+  </div>
+
+  <!-- Competitor 2 -->
+  <div class="card" style="animation: fadeUp 0.6s ease-out 0.2s both;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">2. Bramalea Fence</div>
+        <div class="card-url">bramaleafence.ca</div>
+      </div>
+      <div class="score-badge">61 / 80</div>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#281A39;"></div>
+      <span class="swatch-label">#281A39</span>
+      <div class="swatch" style="background:#F6F6F6;"></div>
+      <span class="swatch-label">#F6F6F6</span>
+    </div>
+    <div class="detail-grid">
+      <dt>Font</dt>
+      <dd>Avenir Heavy / Poppins</dd>
+      <dt>Experience</dt>
+      <dd>Since 1985 (35+ years)</dd>
+      <dt>Compliance</dt>
+      <dd>OPSD standards</dd>
+      <dt>Enterprise Clients</dt>
+      <dd>Amazon, Coca-Cola, Canada's Wonderland, Canadian Tire, Petro-Canada</dd>
+    </div>
+    <p style="font-size:0.9rem;">Longest-tenured competitor with an impressive enterprise client roster. The brand-name logos provide instant credibility that most residential competitors cannot match.</p>
+    <div class="strengths">
+      <div class="strengths-title">Strengths</div>
+      Longest tenure in the market. Biggest brand-name clients provide unparalleled enterprise credibility. OPSD compliance signals professionalism.
+    </div>
+    <div class="differentiator">Key Differentiator: Enterprise credibility via client logos</div>
+  </div>
+
+  <!-- Competitor 3 -->
+  <div class="card" style="animation: fadeUp 0.6s ease-out 0.3s both;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">3. The Fence Builder</div>
+        <div class="card-url">thefencebuilder.ca</div>
+      </div>
+      <div class="score-badge">56 / 80</div>
+    </div>
+    <div class="swatches">
+      <span class="swatch-label" style="color:var(--muted); font-style: italic;">Wix default palette</span>
+    </div>
+    <div class="detail-grid">
+      <dt>Platform</dt>
+      <dd>Wix-based, clean design</dd>
+      <dt>Services</dt>
+      <dd>Wood, repair, composite, decks</dd>
+      <dt>Service Area</dt>
+      <dd>Mississauga, Oakville, Burlington</dd>
+      <dt>Unique Feature</dt>
+      <dd>"Instant Fence Calculator"</dd>
+    </div>
+    <p style="font-size:0.9rem;">Clean execution on a Wix platform. The standout feature is their instant fence calculator, a unique conversion tool that no other competitor offers. Directly overlaps Flawless Fence's service area.</p>
+    <div class="strengths">
+      <div class="strengths-title">Strengths</div>
+      Unique "Instant Fence Calculator" provides interactive pricing. Clean layout despite Wix limitations. Clear service area alignment with western GTA.
+    </div>
+    <div class="differentiator">Key Differentiator: Price estimation tool</div>
+  </div>
+
+  <!-- Competitor 4 -->
+  <div class="card" style="animation: fadeUp 0.6s ease-out 0.4s both;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">4. Cero Fence</div>
+        <div class="card-url">cerofence.com</div>
+      </div>
+      <div class="score-badge">49 / 80</div>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#15254C;"></div>
+      <span class="swatch-label">#15254C</span>
+      <div class="swatch" style="background:#2B5672;"></div>
+      <span class="swatch-label">#2B5672</span>
+    </div>
+    <div class="detail-grid">
+      <dt>Font</dt>
+      <dd>Barlow / Avenir</dd>
+      <dt>Brand Story</dt>
+      <dd>Family-run business</dd>
+      <dt>Services</dt>
+      <dd>Wood, chain link, iron, gates</dd>
+      <dt>Gallery</dt>
+      <dd>Organized by fence type</dd>
+    </div>
+    <p style="font-size:0.9rem;">Solid family-run positioning with a well-organized gallery. The fence-type gallery structure is a UX best practice that helps visitors find relevant examples quickly.</p>
+    <div class="strengths">
+      <div class="strengths-title">Strengths</div>
+      Good gallery organization by fence type. Family trust positioning resonates with residential clients. Clean navy color palette.
+    </div>
+    <div class="differentiator">Key Differentiator: Gallery organized by fence type</div>
+  </div>
+
+  <!-- Competitor 5 -->
+  <div class="card" style="animation: fadeUp 0.6s ease-out 0.5s both;">
+    <div class="card-header">
+      <div>
+        <div class="card-title">5. Urban Fence</div>
+        <div class="card-url">urbanfence.com</div>
+      </div>
+      <div class="score-badge">44 / 80</div>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#EC1B29;"></div>
+      <span class="swatch-label">#EC1B29</span>
+      <div class="swatch" style="background:#000000;"></div>
+      <span class="swatch-label">#000</span>
+      <div class="swatch" style="background:#FFFFFF; border-color: #ccc;"></div>
+      <span class="swatch-label">#FFF</span>
+    </div>
+    <div class="detail-grid">
+      <dt>Font</dt>
+      <dd>Arial (generic)</dd>
+      <dt>Experience</dt>
+      <dd>65+ years combined</dd>
+      <dt>Focus</dt>
+      <dd>Commercial</dd>
+      <dt>Niche Services</dt>
+      <dd>Acoustic barriers, parking bollards, warehouse partitioning</dd>
+    </div>
+    <p style="font-size:0.9rem;">Heavily commercial-focused with unique niche offerings. However, the dated Wix design and cluttered layout undermine their credibility. The harsh red/black palette feels industrial rather than professional.</p>
+    <div class="strengths">
+      <div class="strengths-title">Strengths</div>
+      Unique niche commercial services that no other competitor offers. Strong combined experience claim.
+    </div>
+    <div class="differentiator">Key Differentiator: Niche commercial services (acoustic barriers, bollards)</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============ COMPARISON TABLE ============ -->
+<div class="section">
+  <div class="section-label">03 &mdash; Comparative Analysis</div>
+  <h2>Head-to-Head Comparison</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Design</th>
+          <th>Content</th>
+          <th>Trust</th>
+          <th>SEO</th>
+          <th>Mobile</th>
+          <th>CTA</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GTA Fencing Co.</td>
+          <td class="rating">Excellent</td>
+          <td class="rating">Excellent</td>
+          <td class="rating">Excellent</td>
+          <td class="rating">Excellent</td>
+          <td class="rating">Excellent</td>
+          <td class="rating">Strong</td>
+          <td class="rating">77/80</td>
+        </tr>
+        <tr>
+          <td>Bramalea Fence</td>
+          <td>Good</td>
+          <td>Good</td>
+          <td class="rating">Excellent</td>
+          <td>Moderate</td>
+          <td>Good</td>
+          <td>Moderate</td>
+          <td>61/80</td>
+        </tr>
+        <tr>
+          <td>The Fence Builder</td>
+          <td>Good</td>
+          <td>Good</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td>Good</td>
+          <td class="rating">Strong</td>
+          <td>56/80</td>
+        </tr>
+        <tr>
+          <td>Cero Fence</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td class="rating-low">Basic</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td class="rating-low">49/80</td>
+        </tr>
+        <tr>
+          <td>Urban Fence</td>
+          <td class="rating-low">Dated</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td class="rating-low">Basic</td>
+          <td class="rating-low">Poor</td>
+          <td class="rating-low">Weak</td>
+          <td class="rating-low">44/80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============ SEO LANDSCAPE ============ -->
+<div class="section">
+  <div class="section-label">04 &mdash; SEO Landscape</div>
+  <h2>Search Visibility &amp; Keyword Opportunity</h2>
+  <p>The GTA fencing market is moderately competitive in organic search, with clear gaps that Flawless Fence can exploit.</p>
+
+  <div class="card">
+    <h4>Primary Keywords</h4>
+    <ul>
+      <li><strong>"fence contractor Mississauga"</strong> &mdash; high intent, moderate volume</li>
+      <li><strong>"fence installation GTA"</strong> &mdash; broad reach, competitive</li>
+      <li><strong>"fence repair Toronto"</strong> &mdash; service-specific, high conversion</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Market Observations</h4>
+    <ul>
+      <li><strong>GTA Fencing Company dominates</strong> through a service-page + location-page strategy that captures long-tail searches</li>
+      <li><strong>Most competitors lack dedicated location pages</strong>, leaving local SEO largely uncontested</li>
+      <li><strong>Blog content is sparse across the entire market</strong>, presenting a low-competition content opportunity</li>
+      <li><strong>Service-specific pages</strong> (e.g., "vinyl fence installation Mississauga") are almost nonexistent outside the market leader</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============ TOP 10% PATTERNS ============ -->
+<div class="section">
+  <div class="section-label">05 &mdash; Winning Patterns</div>
+  <h2>What the Top 10% Do Right</h2>
+  <p>Across the competitive landscape, the highest-performing fencing websites share these characteristics:</p>
+
+  <ol class="pattern-list">
+    <li><strong>Individual service pages by fence type</strong> &mdash; not just "residential" vs. "commercial," but dedicated pages for wood, vinyl, chain link, iron, and composite fencing</li>
+    <li><strong>Location and service area pages</strong> &mdash; dedicated pages for each municipality to capture local search traffic</li>
+    <li><strong>Trust statistics bar</strong> &mdash; prominently display years in business, projects completed, star rating, and licensing</li>
+    <li><strong>Testimonials with specifics</strong> &mdash; include name, location, and project type for each review</li>
+    <li><strong>FAQ section</strong> &mdash; answers common questions about pricing, timelines, permits, and materials</li>
+    <li><strong>Warm, earthy palettes</strong> &mdash; the best sites use cream, tan, and burnt orange rather than harsh industrial red and black</li>
+    <li><strong>Galleries organized by fence type</strong> &mdash; visitors can find relevant examples quickly instead of scrolling through an undifferentiated photo dump</li>
+    <li><strong>"Free Estimate" as primary CTA</strong> &mdash; appears in the header, hero section, and throughout every page</li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- ============ RECOMMENDED DESIGN DIRECTION ============ -->
+<div class="section">
+  <div class="section-label">06 &mdash; Recommendations</div>
+  <h2>Design Direction for Flawless Fence</h2>
+  <p>Based on competitive analysis, we recommend the following strategic moves to position Flawless Fence as a premium contender in the GTA market.</p>
+
+  <div class="rec-grid">
+    <div class="rec-item">
+      <h4>Brand Evolution</h4>
+      <p>Evolve the red brand DNA into a warmer, more sophisticated palette. Add a dark base color for contrast and premium feel. Move away from industrial red/black toward earthy, confident tones.</p>
+    </div>
+    <div class="rec-item">
+      <h4>Typography</h4>
+      <p>Adopt a clean two-font pairing: a distinctive serif for headings and a highly legible sans-serif for body text. This instantly elevates the brand above Wix-template competitors.</p>
+    </div>
+    <div class="rec-item">
+      <h4>Content Architecture</h4>
+      <p>Expand to 6+ dedicated service pages organized by fence type (wood, vinyl, chain link, iron, composite, gates). Add a service areas page targeting key GTA municipalities.</p>
+    </div>
+    <div class="rec-item">
+      <h4>Gallery Strategy</h4>
+      <p>Leverage the 60+ gallery photos &mdash; the strongest competitive asset. Organize by fence type with before/after pairs where possible. This is an immediate differentiator over most competitors.</p>
+    </div>
+    <div class="rec-item">
+      <h4>Trust Signals</h4>
+      <p>Add a statistics bar (years in business, projects completed, rating, licensed/insured). Include testimonials with names, locations, and project types. Add a FAQ section.</p>
+    </div>
+    <div class="rec-item">
+      <h4>Conversion Optimization</h4>
+      <p>"Free Estimate" should be the primary CTA on every page &mdash; header, hero, mid-page, and footer. Consider a fence calculator or instant quote widget as a secondary conversion tool.</p>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+  <div class="footer-rule"></div>
+  Competitive Intelligence Report &mdash; Flawless Fence<br>
+  March 2026 &bull; Confidential
+</div>
+
+</div><!-- /.container -->
+
+</body>
+</html>

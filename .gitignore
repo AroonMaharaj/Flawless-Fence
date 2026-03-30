@@ -1,0 +1,17 @@
+# Large media files
+*.mp4
+*.mov
+*.avi
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Session logs
+SESSION-LOG.md
